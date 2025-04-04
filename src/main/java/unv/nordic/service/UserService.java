@@ -25,4 +25,11 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public User updateLanguage(Long id, String language) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) return null;
+        user.setLanguage(language);
+        return userRepository.save(user);
+    }
 }

@@ -45,10 +45,9 @@ public class BotMethods {
             String text = message.getText();
             if (ADMINS.contains(userId)) creatorPanel(sm, text, chatId);
             else userPanel(sm, text, chatId);
-        } else if (message.hasContact()) {
+        } else if (message.hasContact())
             if (choose.containsKey(userId) && choose.get(userId).equals("phone"))
                 registerUser(userId, sm, message.getContact().getPhoneNumber());
-        }
     }
 
     public void callbackData(CallbackQuery callbackQuery) {
@@ -73,22 +72,8 @@ public class BotMethods {
     }
 
     public void userPanel(SendMessage sm, String text, Long userId) {
-        if ("/start".equals(text)) {
-            if (user.containsKey(userId) && lang.containsKey(userId)) {
-                if (lang.get(userId).equals(UZ)) {
-                    sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
-                    sendMSG(sm, Text.MENU_UZ);
-                } else {
-                    sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
-                    sendMSG(sm, Text.MENU_RU);
-                }
-                choose.remove(userId);
-            } else {
-                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.chooseLang));
-                sendMSG(sm, Text.chooseLang);
-                choose.put(userId, "lang");
-            }
-        } else if (choose.containsKey(userId)) {
+        if ("/start".equals(text)) start(sm, userId);
+        else if (choose.containsKey(userId)) {
             switch (choose.get(userId)) {
                 /// register
                 case "lang":
@@ -119,6 +104,7 @@ public class BotMethods {
                         else registerUser(userId, sm, text);
                     }
                     break;
+                /// buttons
                 case "direction":
                     directionCases(sm, userId, text);
                     break;
@@ -133,6 +119,23 @@ public class BotMethods {
     }
 
     ///  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=  UserService  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+    public void start(SendMessage sm, Long userId) {
+        if (user.containsKey(userId) && lang.containsKey(userId)) {
+            if (lang.get(userId).equals(UZ)) {
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
+                sendMSG(sm, Text.MENU_UZ);
+            } else {
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
+                sendMSG(sm, Text.MENU_RU);
+            }
+            choose.remove(userId);
+        } else {
+            sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.chooseLang));
+            sendMSG(sm, Text.chooseLang);
+            choose.put(userId, "lang");
+        }
+    }
+
     public void addUser(Long userId, String phoneNumber) {
         userService.saveUser(User.builder()
                 .id(userId)
@@ -249,6 +252,22 @@ public class BotMethods {
                 sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.OUR_SUCCESSES_RU_BUTTONS));
                 sendMSG(sm, Text.OUR_SUCCESSES_UZ);
                 choose.put(userId, "ourSuccesses");
+                break;
+            case Button.CHOOSE_LANGUAGE_UZ:
+                User updateUserUz = userService.updateLanguage(userId, RU);
+                user.put(updateUserUz.getId(), updateUserUz);
+                lang.put(updateUserUz.getId(), updateUserUz.getLanguage());
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
+                sendMSG(sm, Text.MENU_RU);
+                choose.remove(userId);
+                break;
+            case Button.CHOOSE_LANGUAGE_RU:
+                User updateUserRu = userService.updateLanguage(userId, UZ);
+                user.put(updateUserRu.getId(), updateUserRu);
+                lang.put(updateUserRu.getId(), updateUserRu.getLanguage());
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
+                sendMSG(sm, Text.MENU_UZ);
+                choose.remove(userId);
                 break;
         }
     }
