@@ -25,6 +25,7 @@ public class BotMethods {
     private final UserService userService;
 
     Map<Long, String> choose = new HashMap<>(); // careator panelda kerakli bulimni tanlash
+    Map<Long, User> user = new HashMap<>();
     Map<Long, String> lang = new HashMap<>();
     Map<Long, String> fullName = new HashMap<>();
     Set<Long> ADMINS = Set.of(Template.CREATOR_ID);
@@ -39,14 +40,14 @@ public class BotMethods {
     public void message(Message message) {
         Long chatId = message.getChatId();
         Long userId = message.getFrom().getId();
+        SendMessage sm = new SendMessage(chatId.toString(), "");
         if (message.hasText()) {
-            SendMessage sm = new SendMessage(chatId.toString(), message.getText());
             String text = message.getText();
             if (ADMINS.contains(userId)) creatorPanel(sm, text, chatId);
             else userPanel(sm, text, chatId);
         } else if (message.hasContact()) {
             if (choose.containsKey(userId) && choose.get(userId).equals("phone"))
-                addUser(userId, message.getContact().getPhoneNumber());
+                registerUser(userId, sm, message.getContact().getPhoneNumber());
         }
     }
 
@@ -93,33 +94,24 @@ public class BotMethods {
                     if (text.split(" ").length == 1 && lang.containsKey(userId))
                         sendMSG(sm, lang.get(userId).equals(UZ) ? Text.FAILED_FISH_UZ : Text.FAILED_FISH_RU);
                     else {
+                        sm.setReplyMarkup(buttonSettings.phoneNumberOrLocation(true));
                         sendMSG(sm, lang.get(userId).equals(UZ) ? Text.PHONE_UZ : Text.PHONE_RU);
                         fullName.put(userId, text);
                         choose.put(userId, "phone");
                     }
                     break;
                 case "phone":
-                    String phoneRegex = "^\\+9989[01]\\d{7}$";
+                    String phoneRegex = "^\\+998\\d{9}$";
                     if (lang.containsKey(userId)) {
-                        if (text.matches(phoneRegex))
+                        if (!text.matches(phoneRegex))
                             sendMSG(sm, lang.get(userId).equals(UZ) ? Text.FAILED_PHONE_UZ : Text.FAILED_PHONE_RU);
-                        else {
-                            addUser(userId, text);
-                            if (lang.get(userId).equals(UZ)) {
-                                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
-                                sendMSG(sm, Text.REGISTER_UZ);
-                            } else {
-                                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
-                                sendMSG(sm, Text.REGISTER_RU);
-                            }
-                            choose.put(userId, "menu");
-                        }
+                        else registerUser(userId, sm, text);
                     }
                     break;
-                case "menu":
-                    menuCases(userId, text);
+                case "direction":
+                    directionCases(sm, userId, text);
             }
-        }
+        } else menuCases(sm, userId, text);
     }
 
     ///  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=  UserService  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -130,6 +122,30 @@ public class BotMethods {
                 .phoneNumber(phoneNumber)
                 .language(lang.get(userId))
                 .build());
+    }
+
+    private void registerUser(Long userId, SendMessage sm, String phoneNumber) {
+        if (userService.userIsRegisterNumber(phoneNumber)) {
+            sendMSG(sm, lang.get(userId).equals(UZ) ? Text.REGISTERED_PHONE_UZ : Text.REGISTERED_PHONE_RU);
+            return;
+        }
+        addUser(userId, phoneNumber);
+        if (lang.get(userId).equals(UZ)) {
+            sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
+            sendMSG(sm, Text.REGISTER_UZ);
+        } else {
+            sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
+            sendMSG(sm, Text.REGISTER_RU);
+        }
+        choose.remove(userId);
+    }
+
+    public void getUsersInfo() {
+        this.userService.getAllUsers().forEach(u -> {
+            System.out.println("UserID: " + u.getId());
+            user.put(u.getId(), u);
+            lang.put(u.getId(), u.getLanguage());
+        });
     }
 
     ///  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=  Messages  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
@@ -175,13 +191,67 @@ public class BotMethods {
         }
     }
 
-    public void menuCases(Long userId, String text) {
-        if (lang.containsKey(userId)) {
-            switch (text) {
-                case Button.INFO_UNIVERSITY_UZ:
-                case Button.INFO_UNIVERSITY_RU:
+    public void menuCases(SendMessage sm, Long userId, String text) {
+        if (lang.containsKey(userId)) switch (text) {
+            case Button.INFO_UNIVERSITY_UZ:
+            case Button.INFO_UNIVERSITY_RU:
+                sm.setReplyMarkup(buttonSettings.getInlineMarkupLink(Button.MESSENGERS));
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.INFO_UNIVERSITY_UZ : Text.INFO_UNIVERSITY_RU);
+                break;
+            case Button.DIRECTION_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.DIRECTIONS_UZ));
+                sendMSG(sm, Text.DIRECTION_UZ);
+                choose.put(userId, "direction");
+                break;
+            case Button.DIRECTION_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.DIRECTIONS_RU));
+                sendMSG(sm, Text.DIRECTION_RU);
+                choose.put(userId, "direction");
+                break;
+            case Button.WORK_AND_TRAVEL_UZ:
+            case Button.WORK_AND_TRAVEL_RU:
+                sm.setReplyMarkup(buttonSettings.getInlineMarkupLink(Button.YOUTUBE_VIDEO));
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.WORK_AND_TRAVEL_UZ : Text.WORK_AND_TRAVEL_RU);
+                break;
+            case Button.OFFICE_UZ:
+            case Button.OFFICE_RU:
+                sm.setReplyMarkup(buttonSettings.getInlineMarkupLink(Button.OFFICE_LOCATION));
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.OFFICE_UZ : Text.OFFICE_RU);
+                break;
+            case Button.CONTACT_OPERATOR_UZ:
+            case Button.CONTACT_OPERATOR_RU:
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.CONTACT_OPERATOR_UZ : Text.CONTACT_OPERATOR_RU);
+                break;
+            case Button.OUR_SUCCESSES_UZ:
+            case Button.OUR_SUCCESSES_RU:
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.OUR_SUCCESSES_UZ : Text.OUR_SUCCESSES_RU);
+                choose.put(userId, "ourSuccesses"); /// code...
+                break;
+        }
+    }
 
-            }
+    public void directionCases(SendMessage sm, Long userId, String text) {
+        if (lang.containsKey(userId)) switch (text) {
+            case Button.BACHELORS_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.DIRECTIONS_2_UZ));
+                sendMSG(sm, Text.DIRECTION_UZ);
+                choose.put(userId, "bachelors");
+                break;
+            case Button.BACHELORS_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.DIRECTIONS_2_RU));
+                sendMSG(sm, Text.DIRECTION_RU);
+                choose.put(userId, "bachelors");
+                break;
+            case Button.MASTERS_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MASTERS_DIRECTIONS_UZ));
+                sendMSG(sm, Text.MASTERS_UZ);
+                choose.put(userId, "bachelors_directions");
+                break;
+            case Button.MASTERS_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MASTERS_DIRECTIONS_RU));
+                sendMSG(sm, Text.MASTERS_RU);
+                choose.put(userId, "bachelors_directions");
+                break;
         }
     }
 }
