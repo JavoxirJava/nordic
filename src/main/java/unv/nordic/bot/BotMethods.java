@@ -74,9 +74,20 @@ public class BotMethods {
 
     public void userPanel(SendMessage sm, String text, Long userId) {
         if ("/start".equals(text)) {
-            sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.chooseLang));
-            sendMSG(sm, Text.chooseLang);
-            choose.put(userId, "lang");
+            if (user.containsKey(userId) && lang.containsKey(userId)) {
+                if (lang.get(userId).equals(UZ)) {
+                    sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
+                    sendMSG(sm, Text.MENU_UZ);
+                } else {
+                    sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
+                    sendMSG(sm, Text.MENU_RU);
+                }
+                choose.remove(userId);
+            } else {
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.chooseLang));
+                sendMSG(sm, Text.chooseLang);
+                choose.put(userId, "lang");
+            }
         } else if (choose.containsKey(userId)) {
             switch (choose.get(userId)) {
                 /// register
@@ -110,6 +121,13 @@ public class BotMethods {
                     break;
                 case "direction":
                     directionCases(sm, userId, text);
+                    break;
+                case "bachelors":
+                    bachelorsDirectionCases(sm, userId, text);
+                    break;
+                case "ourSuccesses":
+                    ourSuccessesCases(sm, userId, text);
+                    break;
             }
         } else menuCases(sm, userId, text);
     }
@@ -223,9 +241,14 @@ public class BotMethods {
                 sendMSG(sm, lang.get(userId).equals(UZ) ? Text.CONTACT_OPERATOR_UZ : Text.CONTACT_OPERATOR_RU);
                 break;
             case Button.OUR_SUCCESSES_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.OUR_SUCCESSES_UZ_BUTTONS));
+                sendMSG(sm, Text.OUR_SUCCESSES_RU);
+                choose.put(userId, "ourSuccesses");
+                break;
             case Button.OUR_SUCCESSES_RU:
-                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.OUR_SUCCESSES_UZ : Text.OUR_SUCCESSES_RU);
-                choose.put(userId, "ourSuccesses"); /// code...
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.OUR_SUCCESSES_RU_BUTTONS));
+                sendMSG(sm, Text.OUR_SUCCESSES_UZ);
+                choose.put(userId, "ourSuccesses");
                 break;
         }
     }
@@ -251,6 +274,91 @@ public class BotMethods {
                 sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MASTERS_DIRECTIONS_RU));
                 sendMSG(sm, Text.MASTERS_RU);
                 choose.put(userId, "bachelors_directions");
+                break;
+            case Button.BACK_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
+                sendMSG(sm, Text.MENU_UZ);
+                choose.remove(userId);
+                break;
+            case Button.BACK_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
+                sendMSG(sm, Text.MENU_RU);
+                choose.remove(userId);
+                break;
+        }
+    }
+
+    public void bachelorsDirectionCases(SendMessage sm, Long userId, String text) {
+        switch (text) {
+            case Button.DAY_TIME_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.BACHELORS_DAY_TIME_DIRECTIONS_UZ));
+                sendMSG(sm, Text.DAY_TIME_UZ);
+                choose.put(userId, "day_time");
+                break;
+            case Button.DAY_TIME_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.BACHELORS_DAY_TIME_DIRECTIONS_RU));
+                sendMSG(sm, Text.DAY_TIME_RU);
+                choose.put(userId, "day_time");
+                break;
+            case Button.SURFACE_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.BACHELORS_SURFACE_DIRECTIONS_UZ));
+                sendMSG(sm, Text.SURFACE_UZ);
+                choose.put(userId, "surface");
+                break;
+            case Button.SURFACE_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.BACHELORS_SURFACE_DIRECTIONS_RU));
+                sendMSG(sm, Text.SURFACE_RU);
+                choose.put(userId, "surface");
+                break;
+            case Button.SPECIAL_CORRESPONDENCE_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.BACHELORS_SPECIAL_CORRESPONDENCE_DIRECTIONS_UZ));
+                sendMSG(sm, Text.SPECIAL_CORRESPONDENCE_UZ);
+                choose.put(userId, "special_correspondence");
+                break;
+            case Button.SPECIAL_CORRESPONDENCE_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.BACHELORS_SPECIAL_CORRESPONDENCE_DIRECTIONS_RU));
+                sendMSG(sm, Text.SPECIAL_CORRESPONDENCE_RU);
+                choose.put(userId, "special_correspondence");
+                break;
+            case Button.BACK_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.DIRECTIONS_UZ));
+                sendMSG(sm, Text.DIRECTION_UZ);
+                choose.put(userId, "direction");
+                break;
+            case Button.BACK_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.DIRECTIONS_RU));
+                sendMSG(sm, Text.DIRECTION_RU);
+                choose.put(userId, "direction");
+                break;
+        }
+    }
+
+    public void ourSuccessesCases(SendMessage sm, Long userId, String text) {
+        if (lang.containsKey(userId)) switch (text) {
+            case Button.SCHOLARSHIP_RECIPIENTS_UZ:
+            case Button.SCHOLARSHIP_RECIPIENTS_RU:
+                sm.setReplyMarkup(buttonSettings.getInlineMarkupLink(Button.SCHOLARSHIP_RECIPIENTS_UZ_LINKS));
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.SCHOLARSHIP_RECIPIENTS_UZ : Text.SCHOLARSHIP_RECIPIENTS_RU);
+                break;
+            case Button.OUR_ARCHIVEMENTS_UZ:
+            case Button.OUR_ARCHIVEMENTS_RU:
+                sm.setReplyMarkup(buttonSettings.getInlineMarkupLink(Button.MESSENGERS));
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.OUR_ARCHIVEMENTS_UZ : Text.OUR_ARCHIVEMENTS_RU);
+                break;
+            case Button.MORE_DETAILS_UZ:
+            case Button.MORE_DETAILS_RU:
+                sm.setReplyMarkup(buttonSettings.getInlineMarkupLink(Button.MESSENGERS));
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.MORE_DETAILS_UZ : Text.MORE_DETAILS_RU);
+                break;
+            case Button.BACK_UZ:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
+                sendMSG(sm, Text.MENU_UZ);
+                choose.remove(userId);
+                break;
+            case Button.BACK_RU:
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
+                sendMSG(sm, Text.MENU_RU);
+                choose.remove(userId);
                 break;
         }
     }

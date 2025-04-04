@@ -21,6 +21,9 @@ public interface Text {
     String REGISTERED_PHONE_UZ = "❗ Bu telefon raqami allaqachon roʻyxatdan oʻtgan.";
     String REGISTERED_PHONE_RU = "❗ Этот номер телефона уже зарегистрирован.";
 
+    String MENU_UZ = "\uD83D\uDDD2 Bosh menu";
+    String MENU_RU = "\uD83D\uDDD2 Главное меню";
+
     String REGISTER_UZ = """
             ✅ Tabriklaymiz, Hurmatli foydalanuvchi! Siz muvaffaqiyatli ro‘yxatdan o‘tdingiz.
             📚 Asosiy bo‘limlar:
@@ -172,4 +175,76 @@ public interface Text {
 
     String MASTERS_UZ = "📚 Magistratura yo‘nalishlari:";
     String MASTERS_RU = "📚 Программы магистратуры:";
+
+    String DAY_TIME_UZ = "\uD83D\uDCDA Kunduzgi ta’lim yo‘nalishlari:";
+    String DAY_TIME_RU = "\uD83D\uDCDA Программы дневного обучения:";
+
+    String SURFACE_UZ = "\uD83D\uDCDA Sirtqi ta’lim yo‘nalishlari:";
+    String SURFACE_RU = "\uD83D\uDCDA Направления дистанционного обучения:";
+
+    String SPECIAL_CORRESPONDENCE_UZ = "\uD83D\uDCDA Maxsus sirtqi ta’lim yo‘nalishlari:";
+    String SPECIAL_CORRESPONDENCE_RU = "\uD83D\uDCDA Специальные направления заочного обучения:";
+
+    String SCHOLARSHIP_RECIPIENTS_UZ = """
+            🎯 Grant sohiblari 🎉
+            
+            ⚡️ Italiyaning nufuzli Trento universiteti grant sohibi! 🌟
+            Nordik universitetining Jahon iqtisodiyoti magistratura mutaxassisligi talabasi Javlon Ne'matov Trento universitetida grant asosida o‘qish imkoniyatiga ega bo‘ldi! 🌍
+            📊 THE dunyo top reytingida 350-o‘rin, QS dunyo universitetlari reytingida 457-o‘rinda turuvchi Trento universiteti granti - faqat Nordik universiteti talabalari uchun! 🏆
+            ✅ Talabalarimiz safimizga qo‘shiling va o‘zingiz uchun xalqaro imkoniyatlarga yo‘l oching! 🚀
+            
+            ⚡️ Italiyaning nufuzli Trento universiteti grant sohibasi! 🌟
+            Nordik universitetining Jahon iqtisodiyoti va xalqaro iqtisodiy munosabatlar bakalavriat yo‘nalishi talabasi Karina Rahmatova Trento universitetida grant asosida o‘qish imkoniyatiga ega bo‘ldi! 🎓
+            📊 THE dunyo top reytingida 350-o‘rin, QS dunyo reytingida 457-o‘rinda turuvchi Trento universiteti granti - faqat Nordik universiteti talabalari uchun! 🌏
+            ✅ Safimizga qo‘shiling va xalqaro almashinuv dasturlarimizdan foydalaning! 🌐
+            
+            🇺🇿🇮🇹 Talabamiz Italiyaning nufuzli universitetida grant asosida o‘qish imkoniyatini qo‘lga kiritdi! 🎊
+            Xorijiy til va adabiyoti: ingliz tili yo‘nalishi talabasi Abduqodir Jo‘rayev Partenope universitetida ta'lim olishga kirishmoqda. 📚
+            """;
+
+    String SCHOLARSHIP_RECIPIENTS_RU = """
+            🎯 Получатели стипендии 🎉
+            
+            ⚡️ Получатель гранта престижного Университета Тренто в Италии! 🌟
+            Джавлон Нематов, магистрант факультета мировой экономики Северного университета, получил стипендию на обучение в Университете Тренто! 🌍
+            📊 Грант от Университета Тренто, занимающего 350-е место в мировом рейтинге THE и 457-е место в мировом рейтинге университетов QS, — только для студентов из этого скандинавского университета! 🏆
+            ✅ Присоединяйтесь к нашим студентам и откройте для себя двери в мир международных возможностей! 🚀
+            
+            ⚡️ Стипендиат престижного Университета Тренто в Италии! 🌟
+            Карина Рахматова, студентка бакалавриата по направлению «Мировая экономика и международные экономические отношения» Северного университета, получила стипендию на обучение в Университете Тренто! 🎓
+            📊 Грант от Университета Тренто, занимающего 350-е место в мировом рейтинге THE и 457-е место в мировом рейтинге QS, — эксклюзивно для студентов из скандинавских университетов! 🌏
+            ✅ Присоединяйтесь к нам и воспользуйтесь нашими программами международного обмена! 🌐
+            
+            🇺🇿🇮🇹 Наш студент выиграл возможность учиться в престижном университете Италии по стипендии! 🎊
+            Иностранный язык и литература: студент английского языка Абдукадыр Джораев начинает обучение в Университете Партенопа. 📚
+            """;
+
+    String OUR_ARCHIVEMENTS_UZ = """
+            🏅 Yutuqlarimiz 🏆
+            
+            😀 Nordikda xushxabarlar seriyasi davom etmoqda! 🎉
+            Xorijiy til yo‘nalishi talabasi Nozima Shavkatova Koreya hukumatining eng nufuzli stipendiyalaridan biri (GKS) ni qo‘lga kiritdi. 🌟
+            Endilikda talabamiz o'quv yilining II-semestrini universitetimizning hamkor universitetlaridan birida - Degu universitetida bepul tahsil oladi. 📚
+            🌏 Mazkur stipendiya orqali talabamiz o'zi uchun umuman boshqa mamlakatning madaniyatini kashf qilish hamda nufuzli oliygohning zamonaviy o'quv dasturi orqali tahsil oladi! 🚀
+            """;
+
+    String OUR_ARCHIVEMENTS_RU = """
+            🏅 Наши достижения 🏆
+            
+            😀 Серия хороших новостей продолжается в Скандинавии! 🎉
+            Студентка, изучающая иностранный язык, Нозима Шавкатова выиграла одну из самых престижных стипендий (GKS) от правительства Кореи. 🌟
+            Теперь наш студент будет бесплатно обучаться второй семестр учебного года в одном из вузов-партнеров нашего университета - Университете Тэгу. 📚
+            🌏 Благодаря этой стипендии наш студент откроет для себя культуру совершенно другой страны и будет обучаться по современной программе в престижном университете! 🚀
+            """;
+    String MORE_DETAILS_UZ = """
+            ℹ️ Nordik - Ta'limda mukammallik sari 🌟
+            
+            Bizning maqsadimiz - talabalarga xalqaro darajadagi ta’lim va imkoniyatlar taqdim etish! 🚀
+            """;
+
+    String MORE_DETAILS_RU = """
+            ℹ️ Nordic - На пути к совершенству в образовании 🌟
+            
+            Наша цель — предоставить студентам образование и возможности мирового класса! 🚀
+            """;
 }
