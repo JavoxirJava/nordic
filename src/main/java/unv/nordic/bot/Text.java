@@ -1,7 +1,7 @@
 package unv.nordic.bot;
 
 public interface Text {
-    String BOOK = "\uD83D\uDCDA ";
+    String BOOK = "📚 ";
 
     String chooseLang = """
             🇺🇿 Assalomu alaykum! Tilni tanlang:
@@ -256,7 +256,7 @@ public interface Text {
     String DURATION_TEXT_UZ = """
             📚 %s
             
-            💰 Kontrakt: %s so‘m
+            💰 Kontrakt: %d so‘m
             ⏳ Davomiylik: %s yil
             🗣 Ta’lim tili: %s
             📌 Ta’lim kodi: %s

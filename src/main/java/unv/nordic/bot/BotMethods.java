@@ -131,6 +131,9 @@ public class BotMethods {
                 case "ourSuccesses":
                     ourSuccessesCases(sm, userId, text);
                     break;
+                case "masters":
+                    masterDirectionCases(sm, userId, text);
+                    break;
                 default:
                     sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
                     break;
@@ -240,6 +243,8 @@ public class BotMethods {
             System.out.println(e.getMessage());
         }
     }
+
+    ///  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=  Switch cases  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
     public void menuCases(SendMessage sm, Long userId, String text) {
         if (lang.containsKey(userId)) switch (text) {
@@ -426,11 +431,26 @@ public class BotMethods {
         }
     }
 
-    public void sendDuration(Long userId, String name, int duration, String price, String field_code, String field_lang, String file_path) {
+    public void masterDirectionCases(SendMessage sm, Long userId, String text) {
+        if (lang.containsKey(userId)) {
+            if (lang.get(userId).equals(UZ)) {
+                if (directionMasterUzNames.contains(text)) {
+                    String name = text.substring(3);
+                    directionMasterUz.getFullTime().forEach(fullTime -> {
+                        if (fullTime.getName().equals(name)) {
+                            sendDuration(userId, name, fullTime.getDuration(), fullTime.getPrice(), fullTime.getFieldCode(), fullTime.getFieldLang(), fullTime.getImage().getFilePath());
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    public void sendDuration(Long userId, String name, int duration, int price, String field_code, String field_lang, String file_path) {
         String durationText = String.format(lang.get(userId).equals(UZ) ? Text.DURATION_TEXT_UZ : Text.DURATION_TEXT_RU,
                 name, price, duration, field_lang, field_code);
 
-        SendPhoto sp = new SendPhoto(userId.toString(), new InputFile(file_path));
+        SendPhoto sp = new SendPhoto(userId.toString(), new InputFile("https://source.nordicuniversity.org" + file_path));
         sp.setCaption(durationText);
 
         sendPhoto(sp);
@@ -440,7 +460,7 @@ public class BotMethods {
         RestTemplate restTemplate = new RestTemplate();
 
         String url = "https://source.nordicuniversity.org/api/education/directions?eduDegree=" + (isMaster ? "MASTER" : "BACHELOR") + "&language=" + language.toLowerCase();
-        System.out.println(url);
+
         ResponseEntity<DirectionResponse> response = restTemplate.getForEntity(url, DirectionResponse.class);
 
         if (language.equals(UZ)) {
@@ -465,8 +485,9 @@ public class BotMethods {
     public List<String> getButtons(List<EducationDirection> directions, Set<String> durations, String back) {
         List<String> buttons = directions.stream()
                 .map(direction -> {
-                    durations.add(direction.getName());
-                    return direction.getName();
+                    String name = Text.BOOK + direction.getName();
+                    durations.add(name);
+                    return name;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
 

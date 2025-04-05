@@ -8,13 +8,20 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import unv.nordic.bot.BotMethods;
 import unv.nordic.bot.BotSettings;
+import unv.nordic.bot.ButtonSettings;
+import unv.nordic.service.UserService;
 
 @SpringBootApplication
 public class NordicApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(NordicApplication.class, args);
-        BotMethods botMethods = run.getBean(BotMethods.class);
+        BotSettings botSettings = run.getBean(BotSettings.class);
+        ButtonSettings buttonSettings = run.getBean(ButtonSettings.class);
+        UserService userService = run.getBean(UserService.class);
+
+        BotMethods botMethods = new BotMethods(botSettings, buttonSettings, userService);
+
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new BotSettings(botMethods));
