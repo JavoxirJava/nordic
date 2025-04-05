@@ -132,7 +132,7 @@ public class BotMethods {
                     ourSuccessesCases(sm, userId, text);
                     break;
                 case "masters":
-                    masterDirectionCases(sm, userId, text);
+                    masterDirectionCases(userId, text);
                     break;
                 default:
                     sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
@@ -431,18 +431,23 @@ public class BotMethods {
         }
     }
 
-    public void masterDirectionCases(SendMessage sm, Long userId, String text) {
+    public void masterDirectionCases(Long userId, String text) {
         if (lang.containsKey(userId)) {
-            if (lang.get(userId).equals(UZ)) {
-                if (directionMasterUzNames.contains(text)) {
-                    String name = text.substring(3);
-                    directionMasterUz.getFullTime().forEach(fullTime -> {
-                        if (fullTime.getName().equals(name)) {
-                            sendDuration(userId, name, fullTime.getDuration(), fullTime.getPrice(), fullTime.getFieldCode(), fullTime.getFieldLang(), fullTime.getImage().getFilePath());
-                        }
-                    });
+            if (lang.get(userId).equals(UZ))
+                sendDurationInfo(userId, text, directionMasterUzNames, directionMasterUz);
+            else
+                sendDurationInfo(userId, text, directionMasterRuNames, directionMasterRu);
+        }
+    }
+
+    private void sendDurationInfo(Long userId, String text, Set<String> directionMasterRuNames, DirectionResponse directionResponse) {
+        if (directionMasterRuNames.contains(text)) {
+            String name = text.substring(3);
+            directionResponse.getFullTime().forEach(fullTime -> {
+                if (fullTime.getName().equals(name)) {
+                    sendDuration(userId, name, fullTime.getDuration(), fullTime.getPrice(), fullTime.getFieldCode(), fullTime.getFieldLang(), fullTime.getImage().getFilePath());
                 }
-            }
+            });
         }
     }
 
