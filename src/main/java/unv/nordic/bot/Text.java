@@ -2,6 +2,18 @@ package unv.nordic.bot;
 
 public interface Text {
     String BOOK = "📚 ";
+    int BOOK_INDEX = 3;
+
+    int DAY_TIME = 1;
+    int SURFACE = 2;
+    int SPECIAL_CORRESPONDENCE = 3;
+
+    /// admin
+    String ADMIN_TEXT = "Kerakli menuni tanlang:";
+    String ADMIN_SEND_MESSAGE = "Habarni kiriting:";
+    String ADMIN_USER_COUNT = "Foydalanuvchilar soni: ";
+    String ADMIN_GET_USERS_TABLE = "⏳ Bir oz ko'ting foydalanuvchilar ro'yxati tayyorlanmoqda...";
+    String ADMIN_SUCCESS_SEND_MESSAGE = "Habarni muvaffaqiyatli yuborildi!";
 
     String chooseLang = """
             🇺🇿 Assalomu alaykum! Tilni tanlang:
@@ -278,4 +290,282 @@ public interface Text {
             🔹 Для связи с приемной комиссией нажмите кнопку «Связь с менеджером»
             📝 Подача документов
             📞 Связь с менеджером: 🔹 +998555084400 | @nordikedu""";
+
+    String KOREA_UZ = """
+            #xushxabar
+            #GKS_scholarship
+            
+            🇺🇿🇰🇷 Nozima nufuzli stipendiya sohibasi!
+            
+            ⚡️Nordikda xushxabarlar seriyasi davom etmoqda!\s
+            
+            Xorijiy til yo‘nalishi talabasi Nozima Shavkatova Koreya hukumatining eng nufuzli stipendiyalaridan biri (GKS)ni qo‘lga kiritdi.
+            
+            [📌 Batafsil](https://nordicuniversity.org/uz/press-service/news/nozima-nufuzli-stipendiya-sohibi)
+            """;
+
+    String ITALY_UZ = """
+            🇺🇿🇮🇹Talabamiz Italiyaning nufuzli universitetida grant asosida o‘qish imkoniyatini qo‘lga kiritdi
+            
+            Xorijiy til va adabiyoti: ingliz tili yo‘nalishi talabasi Abduqodir Jo‘rayev Partenope (Universita' Degli Studi Di Napoli "Parthenope" - Italiya) universitetida ta'lim olishga kirishmoqda.\s
+            
+            > Ma'lumot o‘rnida, "Partenope" universiteti 1919-yilda Italiyaning Neapol shahrida tashkil topgan. 15 ming nafarga yaqin talabalarga xalqaro baholanuvchi bilim, muloqot va tanqidiy fikrlash qobiliyatlarini rivojlantirishga qaratilgan puxta ta'lim berib kelmoqda.\s
+            
+            Universitet iqtisodiy, yuridik, muhandislik, texnologik sohalar, avtomobilga oid fanlar va taraqqiyotning muhim sohalarida oliy ta'lim va tadqiqot markazlariga aylangan.
+            
+            [⏺XNU rasmiy kanali](https://t.me/nordic_edu)
+            """;
+
+    String ITALY_2_UZ = """
+            ⚡️Italiyaning nufuzli Trento universiteti grant sohibi!\s
+            
+            Nordik universitetining Jahon iqtisodiyoti magistratura mutaxassisligi talabasi Javlon Ne'matov Trento universitetida grant asosida o‘qish imkoniyatiga ega bo‘ldi!\s
+            
+            📊 THE dunyo top reytingida 350-o‘rin,\s
+                QS dunyo universitetlari reytingida 457-o‘rinda turuvchi Trento universiteti granti - faqat Nordik universiteti talabalari uchun!\s
+            
+            ✅ Talabalarimiz safimizga qo‘shiling va o‘zingiz uchun xalqaro imkoniyatlarga yo‘l oching!\s
+            ➖➖➖➖➖
+            🔔 Eslatib o‘tamiz, 12 ta magistratura mutaxassisligi va 16 ta bakalavriat yo‘nalishiga qabulimiz [davom etmoqda](https://t.me/nordic_edu/4147).
+            
+            ➡️ https://qabul.nordicuniversity.org/uz
+            
+            +998555084400/@nordic_chat_bot
+            
+            [⏺Nordik rasmiy kanali](https://t.me/nordic_edu)
+            """;
+
+    String ITALY_3_UZ = """
+            ⚡️Italiyaning nufuzli Trento universiteti grant sohibasi!\s
+            
+            Nordik universitetining Jahon iqtisodiyoti va xalqaro iqtisodiy munosabatlar bakalavriat yo‘nalishi talabasi Karina Rahmatova Trento universitetida grant asosida o‘qish imkoniyatiga ega bo‘ldi!\s
+            
+            📊THE dunyo top reytingida 350-o‘rin,\s
+                 QS dunyo reytingida 457-o‘rinda turuvchi Trento universiteti granti - faqat Nordik universiteti talabalari uchun!\s
+            
+            ✅ Safimizga qo‘shiling va xalqaro almashinuv dasturlarimizdan foydalaning!\s
+            
+            📺 https://www.youtube.com/shorts/d27NBVaFSmo
+            ➖➖➖➖➖
+            📌Qabulimiz davom etmoqda.
+            
+            ➡️ https://qabul.nordicuniversity.org/uz
+            
+            +998555084400/@nordic_chat_bot""";
+
+    String UZ_REPORT_1_UZ = """
+             ⚡️⚡️⚡Jurnalistika mutaxassisligi grant sohiblari bilan tanishing!\s
+            
+             Magistraturaga kirish imtihonlarida eng yuqori ball bilan talabalikka tavsiya etilgan 10 nafar talabgorlarga 100% lik grantlar ajratildi.\s
+            
+            > O‘zbekiston Respublikasi Ekologiya, atrof-muhitni muhofaza qilish va iqlim o‘zgarishi vazirligining maqsadli grantlar sohiblari:\s
+            1. Ismat Do‘stmurodov
+            
+            2. Nizomjon Islomov
+            
+            3. Umarbek Esanmurodov.\s
+            
+            > Kirish imtihonida (100 ballik tizimdan) eng yuqori ball to‘plagan "UzReport jurnalistika, media va kommunikatsiyalar akademiyasi" grantlari sohiblari:\s
+            
+            1. Muhammadali Mamadaliyev - 95 ball
+            
+            2. Muxtasar Isaqova - 93 ball
+            
+            3. Gulzoda Olimjonova - 93 ball
+            
+            4. Anvar Samadov - 90 ball
+            
+            5. Avazbek Arabboyev - 90 ball
+            
+            6. Sayyora Qodirova - 85 ball
+            
+            7. Umidjon Mamarasulov - 85 ball.\s
+            
+            Grant sohiblarini tabriklaymiz!
+            
+            [⏺Nordik rasmiy kanali](https://t.me/nordic_edu)
+            """;
+
+    String UZ_REPORT_2_UZ = """
+            ⚡️Grant sohiblarini tabriklaymiz!\s
+            
+            Jurnalistika yo‘nalishiga eng yuqori ball bilan talabalikka tavsiya etilgan 9 nafar talabgorlarga 50 % lik grantlar ajratildi.\s
+            
+            > "UzReport jurnalistika, media va kommunikatsiyalar akademiyasi" grantlari sohiblari bilan tanishing:
+            
+            1. Sarvinoz Odilova
+            
+            2. Gulbahor Abduhalimova
+            
+            3. Sanjar Quvandiqov
+            
+            4. Sarvinoz Rajabova
+            
+            5. Simoraxon Rahimjonova
+            
+            6. Diyora Davlotova
+            
+            7. Shodiyor Niyatqobilov\s
+            
+            8. Shahnoza Rahmatova
+            
+            9. Diyorbek Jo‘raboyev.\s
+            
+            [⏺Nordik rasmiy kanali](https://t.me/nordic_edu)
+            """;
+
+    String POLAND_UZ = """
+            🇵🇱 Talabamiz Polshaga yo‘l oldi! 🛫
+            
+            Madinabonu Isaqova Erasmus+ KA171 ICM xalqaro dasturi grantini qo‘lga kiritdi.\s
+            
+            Grant asosida Polshaning WSEI universitetida bepul taʼlim olish imkoniyatiga ega bo‘ldi. Madinabonuga bilim olish va fan bilan mashg‘ul bo‘lishi uchun stipendiya ham ajratilmoqda.
+            
+            Omad Madinabonu!
+            
+            🌐 https://youtube.com/shorts/zMZWXynqmVs?si=LET3pWjx0oYV5JVu
+            """;
+
+    String AMERICA_UZ = """
+            #AQSh_talabalarimiz_nigohida
+            
+            📹 Nordic news| AQShning Michigan shtatidagi Lawrence Technological Universitydan maxsus reportaj.
+            
+            📽 https://youtu.be/g0F29jsxu3k""";
+
+    String KOREA_RU = """
+            #хорошиеновости
+            #стипендия_ГКС
+            
+            🇺🇿🇰🇷 Нозима — обладательница престижной стипендии!
+            
+            ⚡️Продолжается серия хороших новостей в странах Северной Европы!
+            
+            Студентка, изучающая иностранный язык, Нозима Шавкатова выиграла одну из самых престижных стипендий (GKS) от правительства Кореи.
+            
+            [📌Подробнее](https://nordicuniversity.org/uz/press-service/news/nozima-nufuzli-stipendiya-sohibi)""";
+
+    String ITALY_RU = """
+            🇺🇿🇮🇹Наш студент получил стипендию на обучение в престижном университете Италии
+            
+            Студент факультета иностранного языка и литературы: английского языка Абдукадыр Джораев начинает обучение в Университете Партенопе (Universita' Degli Studi Di Napoli "Parthenope" - Италия).
+            
+            > Для информации: Университет Партенопа был основан в 1919 году в Неаполе, Италия. Он обеспечивает серьезное образование, направленное на развитие знаний, навыков общения и критического мышления, оцененных на международном уровне, у почти 15 000 студентов.
+            
+            Университет стал центром высшего образования и исследований в области экономики, права, инженерии, технологий, автомобильных наук и других важных направлений развития.
+            
+            [⏺Официальный канал XNU](https://t.me/nordic_edu)""";
+
+    String ITALY_2_RU = """
+            ⚡️Получатель гранта престижного Университета Тренто в Италии!
+            
+            Джавлон Нематов, студент магистратуры по направлению «Мировая экономика» в Северном университете, получил стипендию на обучение в Университете Тренто!
+            
+            📊 350-е место в мировом рейтинге лучших
+            Университет Тренто, занимающий 457-е место в рейтинге университетов мира QS, предлагает грант — эксклюзивно для студентов университетов Северных стран!
+            
+            ✅ Присоединяйтесь к нашим студентам и откройте для себя двери в мир международных возможностей!
+            ➖➖➖➖➖
+            🔔 Напоминаем, что прием на 12 специальностей магистратуры и 16 специальностей бакалавриата продолжается (https://t.me/nordic_edu/4147).
+            
+            ➡️ https://qabul.nordicuniversity.org/uz
+            
+            +998555084400/@nordic_chat_bot
+            
+            [⏺Официальный канал Nordic](https://t.me/nordic_edu)""";
+
+    String ITALY_3_RU = """
+            ⚡️Получатель гранта престижного Университета Тренто в Италии!
+            
+            Студентка бакалавриата по направлению «Мировая экономика и международные экономические отношения» Северного университета Карина Рахматова получила стипендию на обучение в Университете Тренто!
+            
+            📊350-е место в мировом рейтинге лучших по версии THE,s
+            Университет Тренто, занимающий 457-е место в мировом рейтинге QS, предлагает грант исключительно для студентов из скандинавских университетов!
+            
+            ✅ Присоединяйтесь к нам и воспользуйтесь нашими программами международного обмена!
+            
+            📺 https://www.youtube.com/shorts/d27NBVaFSmo
+            ➖➖➖➖➖
+            📌Прием заявок продолжается.
+            
+            ➡️ https://qabul.nordicuniversity.org/uz
+            
+            +998555084400/@nordic_chat_bot""";
+
+    String UZ_REPORT_1_RU = """
+            ⚡️⚡️⚡Встречайте победителей стипендии по журналистике!
+            
+            100% стипендии были предоставлены 10 абитуриентам, рекомендованным к зачислению и набравшим наивысшие баллы на вступительных экзаменах в магистратуру.
+            
+            > Получатели целевых грантов Министерства экологии, охраны окружающей среды и изменения климата Республики Узбекистан:
+            1. Исмат Дустмуродов
+            
+            2. Низамжон Исламов
+            
+            3. Умарбек Эсанмуродов.с
+            
+            > Грантополучатели «Академии журналистики, медиа и коммуникаций UzReport», набравшие наивысшие баллы на вступительном экзамене (из 100 баллов):
+            
+            1. Мухаммадали Мамадалиев – 95 очков
+            
+            2. Мухтасар Исакова – 93 очка
+            
+            3. Гульзода Олимжонова – 93 очка
+            
+            4. Анвар Самедов - 90 очков
+            
+            5. Авазбек Араббоев – 90 очков
+            
+            6. Сайёра Кадирова – 85 очков
+            
+            7. Умиджон Мамарасулов ​​– 85 очков.
+            
+            Поздравляем получателей грантов!
+            
+            [⏺Официальный канал Nordic](https://t.me/nordic_edu)""";
+
+    String UZ_REPORT_2_RU = """
+            ⚡️Поздравляем грантополучателей!
+            
+            50% грантов были предоставлены 9 кандидатам, рекомендованным к зачислению на программу «Журналистика» и набравшим наивысшие баллы.
+            
+            > Познакомьтесь с получателями грантов «Академии журналистики, медиа и коммуникаций UzReport»:
+            
+            1. Сарвиноз Одилова
+            
+            2. Гульбахор Абдухалимов
+            
+            3. Санжар Кувандиков
+            
+            4. Сарвиноз Раджабова
+            
+            5. Симорахон Рахимжонова
+            
+            6. Диёра Давлотова
+            
+            7. Шодиёр Нияткобиловс
+            
+            8. Шахноза Рахматова
+            
+            9. Диёрбек Джурабоев.с
+            
+            [⏺Официальный канал Nordic](https://t.me/nordic_edu)""";
+
+    String POLAND_RU = """
+            🇵🇱 Наш студент отправляется в Польшу! 🛫
+            
+            Мадинабону Исакова получила грант международной программы Erasmus+ KA171 ICM.
+            
+            Благодаря стипендии он смог получить бесплатное образование в университете WSEI в Польше. Мадинабону также предоставляется стипендия для продолжения образования и науки.
+            
+            Удачи, Мадинабону!
+            
+            🌐 https://youtube.com/shorts/zMZWXynqmVs?si=LET3pWjx0oYV5JVu""";
+
+    String AMERICA_RU = """
+            #США_глазами_наших_студентов
+            
+            📹 Новости Северной Европы| Специальный репортаж из Технологического университета Лоуренса в Мичигане, США.
+            
+            📽 https://youtu.be/g0F29jsxu3k""";
 }

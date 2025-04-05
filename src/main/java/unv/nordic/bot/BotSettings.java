@@ -17,7 +17,6 @@ public class BotSettings extends TelegramLongPollingBot {
         botThread = new Thread(() -> {
             System.out.println(Template.ANSI_BLUE + botThread.getName() + " -> New Thread started." + Template.ANSI_RESET);
             if (update.hasMessage()) botMethods.message(update.getMessage());
-            else if (update.hasCallbackQuery()) botMethods.callbackData(update.getCallbackQuery());
             stopBot();
         });
         botThread.start();

@@ -22,6 +22,10 @@ public class UserService {
         return userRepository.existsUserByPhoneNumber(phoneNumber);
     }
 
+    public Long getUserCount() {
+        return userRepository.count();
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
