@@ -1,8 +1,10 @@
 package unv.nordic.bot;
 
 public interface Template {
-    String BOT_TOKEN = "7383627105:AAFrktVAWW7g6tIiNwxd8pi8xsGLMPR_8ZQ";
-    String BOT_USERNAME = "@full_testbot";
+    String BOT_TOKEN = "<BotToken>";
+    String BOT_USERNAME = "<BotUsername>";
+    String API_URL = "API_URL";
+
     Long CREATOR_ID = 3242234234L; // 1085241246
     Long CREATOR_ID_2 = 1085241246L;
 

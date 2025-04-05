@@ -1,6 +1,5 @@
 package unv.nordic.bot;
 
-import lombok.Setter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,6 @@ public class BotMethods {
     Map<Long, User> user = new HashMap<>();
     Map<Long, String> lang = new HashMap<>();
     Map<Long, String> fullName = new HashMap<>();
-    @Setter
     Map<String, String> images = new HashMap<>();
     Set<Long> ADMINS = Set.of(Template.CREATOR_ID);
     Set<String> directionBachelorDayTimeNamesUz = new HashSet<>();
@@ -69,8 +67,6 @@ public class BotMethods {
     }
 
     public void message(Message message) {
-        System.out.println(images.size());
-
         Long chatId = message.getChatId();
         Long userId = message.getFrom().getId();
         SendMessage sm = new SendMessage(chatId.toString(), "");
@@ -624,7 +620,7 @@ public class BotMethods {
         String durationText = String.format(lang.get(userId).equals(UZ) ? Text.DURATION_TEXT_UZ : Text.DURATION_TEXT_RU,
                 name, price, duration, field_lang, field_code);
 
-        SendPhoto sp = new SendPhoto(userId.toString(), new InputFile("https://source.nordicuniversity.org" + file_path));
+        SendPhoto sp = new SendPhoto(userId.toString(), new InputFile(Template.API_URL + file_path));
         sp.setCaption(durationText);
 
         sendPhoto(sp);
@@ -633,7 +629,7 @@ public class BotMethods {
     public void getDirections(String language, boolean isMaster) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "https://source.nordicuniversity.org/api/education/directions?eduDegree=" + (isMaster ? "MASTER" : "BACHELOR") + "&language=" + language.toLowerCase();
+        String url = Template.API_URL + "/api/education/directions?eduDegree=" + (isMaster ? "MASTER" : "BACHELOR") + "&language=" + language.toLowerCase();
 
         ResponseEntity<DirectionResponse> response = restTemplate.getForEntity(url, DirectionResponse.class);
 

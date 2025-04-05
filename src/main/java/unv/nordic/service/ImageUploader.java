@@ -69,7 +69,6 @@ public class ImageUploader implements CommandLineRunner {
                         .get()
                         .getFileId();
 
-                // 3. FileID ni yozamiz
                 writer.write(fileName + "=" + fileId);
                 writer.newLine();
 
