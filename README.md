@@ -85,7 +85,7 @@ Til tanlovi: O‘zbekcha va Ruscha
 # 👨‍🎓 Muallif
 *Javohir* – Java dasturchi va Telegram bot ishlab chiqaruvchisi
 Loyihani Nordic University uchun ishlab chiqqan.
-📬 Aloqa: @M_Javoxir_1
+📬 Aloqa: [Javohir](https://t.me/M_Javoxir_1)
 
 # 📝 Litsenziya
 Bu loyiha universitet ichki ishlanmasi hisoblanadi. Koddan foydalanish uchun ruxsat so‘rashingiz kerak.
