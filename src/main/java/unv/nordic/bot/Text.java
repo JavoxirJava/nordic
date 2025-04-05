@@ -1,6 +1,8 @@
 package unv.nordic.bot;
 
 public interface Text {
+    String BOOK = "\uD83D\uDCDA ";
+
     String chooseLang = """
             🇺🇿 Assalomu alaykum! Tilni tanlang:
             🇷🇺 Здравствуйте! Выберите язык:
@@ -23,6 +25,9 @@ public interface Text {
 
     String MENU_UZ = "\uD83D\uDDD2 Bosh menu";
     String MENU_RU = "\uD83D\uDDD2 Главное меню";
+
+    String DEFAULT_UZ = "Bu buyruq hozirda mavjud emas \uD83E\uDD37\uD83C\uDFFB\u200D♂️ /start buyrug'idan foydalaning.";
+    String DEFAULT_RU = "Эта команда в данный момент недоступна \uD83E\uDD37\uD83C\uDFFB\u200D♂️\nИспользуйте команду /start.";
 
     String REGISTER_UZ = """
             ✅ Tabriklaymiz, Hurmatli foydalanuvchi! Siz muvaffaqiyatli ro‘yxatdan o‘tdingiz.
@@ -247,4 +252,30 @@ public interface Text {
             
             Наша цель — предоставить студентам образование и возможности мирового класса! 🚀
             """;
+
+    String DURATION_TEXT_UZ = """
+            📚 %s
+            
+            💰 Kontrakt: %s so‘m
+            ⏳ Davomiylik: %s yil
+            🗣 Ta’lim tili: %s
+            📌 Ta’lim kodi: %s
+            
+            \uD83D\uDD39 Hujjat topshirish muddati: 1-oktyabrgacha
+            \uD83D\uDD39 Qabul bo‘limi bilan bog‘lanish uchun "Menejer bilan aloqa" tugmasini bosing
+            \uD83D\uDCDD Hujjat topshirish
+            \uD83D\uDCDE Menejer bilan aloqa: 🔹 +998555084400 | @nordikedu""";
+
+    String DURATION_TEXT_RU = """
+            📚 %s
+            
+            💰 Контракт: %d сум
+            ⏳ Продолжительность: %d года
+            🗣 Язык обучения: %s
+            📌 Код обучения: %s
+            
+            🔹 Срок подачи документов: до 1 октября
+            🔹 Для связи с приемной комиссией нажмите кнопку «Связь с менеджером»
+            📝 Подача документов
+            📞 Связь с менеджером: 🔹 +998555084400 | @nordikedu""";
 }

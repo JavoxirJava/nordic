@@ -1,21 +1,26 @@
 package unv.nordic.bot;
 
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import unv.nordic.entity.User;
+import unv.nordic.payload.DirectionResponse;
+import unv.nordic.payload.EducationDirection;
 import unv.nordic.service.UserService;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BotMethods {
@@ -29,6 +34,14 @@ public class BotMethods {
     Map<Long, String> lang = new HashMap<>();
     Map<Long, String> fullName = new HashMap<>();
     Set<Long> ADMINS = Set.of(Template.CREATOR_ID);
+    Set<String> directionMasterUzNames = new HashSet<>();
+    Set<String> directionBachelorUzNames = new HashSet<>();
+    Set<String> directionMasterRuNames = new HashSet<>();
+    Set<String> directionBachelorRuNames = new HashSet<>();
+    DirectionResponse directionMasterUz = new DirectionResponse();
+    DirectionResponse directionBachelorUz = new DirectionResponse();
+    DirectionResponse directionMasterRu = new DirectionResponse();
+    DirectionResponse directionBachelorRu = new DirectionResponse();
     String UZ = "UZ", RU = "RU";
 
     public BotMethods(@Lazy BotSettings botSettings, ButtonSettings buttonSettings, UserService userService) {
@@ -68,6 +81,9 @@ public class BotMethods {
                 choose.put(userId, "username");
                 break;
             }
+            default:
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
+                break;
         }
     }
 
@@ -110,9 +126,13 @@ public class BotMethods {
                     break;
                 case "bachelors":
                     bachelorsDirectionCases(sm, userId, text);
+                    getDirections(lang.get(userId), false);
                     break;
                 case "ourSuccesses":
                     ourSuccessesCases(sm, userId, text);
+                    break;
+                default:
+                    sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
                     break;
             }
         } else menuCases(sm, userId, text);
@@ -175,7 +195,16 @@ public class BotMethods {
             sendMessage.setText(text);
             botSettings.execute(sendMessage);
         } catch (TelegramApiException e) {
-            System.out.println("not execute");
+            System.err.println("not execute");
+        }
+    }
+
+    public void sendPhoto(SendPhoto sendPhoto) {
+        try {
+            botSettings.execute(sendPhoto);
+        } catch (TelegramApiException e) {
+            System.err.println("not execute");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -269,6 +298,9 @@ public class BotMethods {
                 sendMSG(sm, Text.MENU_UZ);
                 choose.remove(userId);
                 break;
+            default:
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
+                break;
         }
     }
 
@@ -285,14 +317,16 @@ public class BotMethods {
                 choose.put(userId, "bachelors");
                 break;
             case Button.MASTERS_UZ:
-                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MASTERS_DIRECTIONS_UZ));
+                getDirections(lang.get(userId), true);
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(createButtons(directionMasterUz.getFullTime(), UZ, true)));
                 sendMSG(sm, Text.MASTERS_UZ);
-                choose.put(userId, "bachelors_directions");
+                choose.put(userId, "masters");
                 break;
             case Button.MASTERS_RU:
-                sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MASTERS_DIRECTIONS_RU));
+                getDirections(lang.get(userId), true);
+                sm.setReplyMarkup(buttonSettings.getKeyboardButton(createButtons(directionMasterRu.getFullTime(), RU, true)));
                 sendMSG(sm, Text.MASTERS_RU);
-                choose.put(userId, "bachelors_directions");
+                choose.put(userId, "masters");
                 break;
             case Button.BACK_UZ:
                 sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_UZ));
@@ -303,6 +337,9 @@ public class BotMethods {
                 sm.setReplyMarkup(buttonSettings.getKeyboardButton(Button.MENU_RU));
                 sendMSG(sm, Text.MENU_RU);
                 choose.remove(userId);
+                break;
+            default:
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
                 break;
         }
     }
@@ -349,7 +386,11 @@ public class BotMethods {
                 sendMSG(sm, Text.DIRECTION_RU);
                 choose.put(userId, "direction");
                 break;
+            default:
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
+                break;
         }
+
     }
 
     public void ourSuccessesCases(SendMessage sm, Long userId, String text) {
@@ -379,6 +420,57 @@ public class BotMethods {
                 sendMSG(sm, Text.MENU_RU);
                 choose.remove(userId);
                 break;
+            default:
+                sendMSG(sm, lang.get(userId).equals(UZ) ? Text.DEFAULT_UZ : Text.DEFAULT_RU);
+                break;
         }
+    }
+
+    public void sendDuration(Long userId, String name, int duration, String price, String field_code, String field_lang, String file_path) {
+        String durationText = String.format(lang.get(userId).equals(UZ) ? Text.DURATION_TEXT_UZ : Text.DURATION_TEXT_RU,
+                name, price, duration, field_lang, field_code);
+
+        SendPhoto sp = new SendPhoto(userId.toString(), new InputFile(file_path));
+        sp.setCaption(durationText);
+
+        sendPhoto(sp);
+    }
+
+    public void getDirections(String language, boolean isMaster) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "https://source.nordicuniversity.org/api/education/directions?eduDegree=" + (isMaster ? "MASTER" : "BACHELOR") + "&language=" + language.toLowerCase();
+        System.out.println(url);
+        ResponseEntity<DirectionResponse> response = restTemplate.getForEntity(url, DirectionResponse.class);
+
+        if (language.equals(UZ)) {
+            if (isMaster) directionMasterUz = response.getBody();
+            else directionBachelorUz = response.getBody();
+        } else {
+            if (isMaster) directionMasterRu = response.getBody();
+            else directionBachelorRu = response.getBody();
+        }
+    }
+
+    public List<String> createButtons(List<EducationDirection> directions, String language, boolean isMaster) {
+        if (language.equals(UZ)) {
+            if (isMaster) return getButtons(directions, directionMasterUzNames, Button.BACK_UZ);
+            else return getButtons(directions, directionBachelorUzNames, Button.BACK_UZ);
+        } else {
+            if (isMaster) return getButtons(directions, directionMasterRuNames, Button.BACK_RU);
+            else return getButtons(directions, directionBachelorRuNames, Button.BACK_RU);
+        }
+    }
+
+    public List<String> getButtons(List<EducationDirection> directions, Set<String> durations, String back) {
+        List<String> buttons = directions.stream()
+                .map(direction -> {
+                    durations.add(direction.getName());
+                    return direction.getName();
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        buttons.add(back);
+        return buttons;
     }
 }

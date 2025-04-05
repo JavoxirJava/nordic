@@ -27,7 +27,7 @@ public interface Button {
     String OFFICE_RU = "\uD83D\uDCCD Вход в офис";
     String CONTACT_OPERATOR_RU = "\uD83D\uDCDE Связаться с оператором";
     String OUR_SUCCESSES_RU = "\uD83C\uDFC6 Наши успехи";
-    String CHOOSE_LANGUAGE_RU = "\uD83C\uDDF2\uD83C\uDDFE Изменить язык";
+    String CHOOSE_LANGUAGE_RU = "\uD83C\uDDF7\uD83C\uDDFA Изменить язык";
     List<String> MENU_RU = List.of(INFO_UNIVERSITY_RU, DIRECTION_RU, WORK_AND_TRAVEL_RU, OFFICE_RU, CONTACT_OPERATOR_RU, OUR_SUCCESSES_RU, CHOOSE_LANGUAGE_RU);
 
     /// Messengers

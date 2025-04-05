@@ -87,7 +87,7 @@ public class ButtonSettings {
         keyboardRows.add(keyboardRow2);
         markup.setSelective(true);
         markup.setResizeKeyboard(true);
-        markup.setOneTimeKeyboard(true);
+//        markup.setOneTimeKeyboard(true);
         markup.setKeyboard(keyboardRows);
         return markup;
     }
